@@ -1,0 +1,101 @@
+/* ==UserStyle==
+@name         	Mastodon Wide
+@namespace    	USO Archive
+@author       	Shaan
+@description  	A Mastodon modification to utilize wider screens
+@version      	20241027.03.00
+@license      	CC0-1.0
+@preprocessor	less
+@homepageURL	https://github.com/shanto/UserStyles
+@updateURL		https://raw.githubusercontent.com/shanto/UserStyles/main/src/mastodon-wide.css
+@var range		numCols "Number of columns" [3, 1, 5, 1]
+@var checkbox	showLeft "Show Left Column" 0
+==/UserStyle== */
+@-moz-document domain("mastodon.social"), domain("fosstodon.org"), domain("gensokyo.social"), domain("ravenation.club"), domain("mastodon.art"), domain("meow.social"), domain("mastodon.lol"), domain("hostux.social"), domain("mastodon.green"), domain("mastodon.online"), domain("stranger.social"), domain("mas.to") {
+	:root {
+		--lc-width: 300px;
+		--rc-width: 200px;
+		--gap: 10px;
+	}
+	.columns-area__panels {
+		gap: 0;
+	}
+	.columns-area__panels__main {
+		--main-width: calc(100% - var(--rc-width) - @showLeft*var(--lc-width));
+		max-width: var(--main-width);
+		min-width: var(--main-width);
+	}
+	.columns-area__panels__pane {
+		> .columns-area__panels__pane__inner {
+			width: calc(var(--rc-width) - var(--gap));
+		}
+		&:nth-child(1) {
+			opacity: calc(100% * @showLeft);
+			--left-width: calc(var(--lc-width) * @showLeft);
+			min-width: var(--left-width);
+			margin: var(--gap);
+		}
+		&:nth-child(3) {
+			--right-width: var(--rc-width);
+			min-width: var(--right-width);
+/* 			margin-right: var(--gap); */
+		}
+		.navigation-panel > * > hr {
+			margin: 0 var(--gap);
+		}
+		.column-link {
+			border-left-width: 0;
+		}
+	}
+	.item-list {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		
+		&>* {
+			width: 100%;
+		}
+		article:not(:nth-of-type(3)) {
+			border-right: 1px solid #333;
+		}
+		&>article {
+			display: flex;
+			width: calc((100% / @numCols) - 1px);
+			max-width: calc((100% / @numCols) - 1px);
+			>div {
+				min-width: 100%;
+				max-width: 100%;
+				display: flex;
+				flex-grow: 1;
+			}
+			.status__wrapper {
+				display: flex;
+				flex-grow: 1;
+				flex-direction: column;
+				max-width: 100%;
+			}
+			.status {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				.status__info {
+					order: 0;
+				}
+				.status__content {
+					order: 2;
+					flex-grow: 1;
+				}
+				.media-gallery, .status-card {
+					order: 1;
+					margin: 0 0 var(--gap) 0;
+				}
+				.hashtag-bar {
+					order: 3;
+				}
+				.status__action-bar {
+					order: 4;
+				}
+			}
+		}
+	}
+}

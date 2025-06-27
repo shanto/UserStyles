@@ -1,0 +1,12 @@
+/* ==UserStyle==
+@name           Autohotkey Docs: Dark
+@namespace      github.com/shanto
+@version        1.0.0
+@description    Simple hack to force dark mode in the docs section.
+@author         Shaan
+@homepageURL	https://github.com/shanto/UserStyles
+@updateURL		https://raw.githubusercontent.com/shanto/UserStyles/main/src/autohotkey.com-docs.css
+==/UserStyle== */
+@-moz-document regexp("^https?://(www\\.)?autohotkey\\.com/docs/.*") {
+	@import url("/docs/v2/static/dark.css")  screen and (prefers-color-scheme: dark);
+}
